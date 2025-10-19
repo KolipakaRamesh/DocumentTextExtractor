@@ -5,6 +5,7 @@ from PIL import Image
 import io
 import re
 import os
+import shutil
 
 # Note: Tesseract OCR must be installed on the system for this to work.
 # On Debian/Ubuntu: sudo apt-get install tesseract-ocr
@@ -21,6 +22,9 @@ print(f"Attempting to set Tesseract command to: {tesseract_path}")
 print(f"Does Tesseract path exist? {os.path.exists(tesseract_path)}")
 if os.path.exists(tesseract_path):
     pytesseract.pytesseract.tesseract_cmd = tesseract_path
+elif shutil.which('tesseract'):
+    pytesseract.pytesseract.tesseract_cmd = shutil.which('tesseract')
+    print(f"Using system Tesseract path: {pytesseract.pytesseract.tesseract_cmd}")
 else:
     # For local development on Windows
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
