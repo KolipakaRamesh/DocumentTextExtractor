@@ -1,0 +1,10 @@
+.git
+__pycache__/
+*.pyc
+.env
+venv/
+build.sh
+vercel.json
+README.md
+*.log
+tesseract/

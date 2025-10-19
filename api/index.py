@@ -17,18 +17,13 @@ import shutil
 
 # Path to Tesseract executable
 # This is for Vercel deployment
-tesseract_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'tesseract', 'bin', 'tesseract'))
-print(f"Attempting to set Tesseract command to: {tesseract_path}")
-print(f"Does Tesseract path exist? {os.path.exists(tesseract_path)}")
-if os.path.exists(tesseract_path):
-    pytesseract.pytesseract.tesseract_cmd = tesseract_path
-elif shutil.which('tesseract'):
+if shutil.which('tesseract'):
     pytesseract.pytesseract.tesseract_cmd = shutil.which('tesseract')
     print(f"Using system Tesseract path: {pytesseract.pytesseract.tesseract_cmd}")
 else:
-    # For local development on Windows
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-    print(f"Falling back to Windows Tesseract path: {pytesseract.pytesseract.tesseract_cmd}")
+    print("Tesseract executable not found in system PATH. Please ensure it is installed and configured correctly.")
+    # Fallback for local Windows development if needed, but not for Docker
+    # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 app = FastAPI(
