@@ -16,12 +16,15 @@ import os
 
 # Path to Tesseract executable
 # This is for Vercel deployment
-tesseract_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'tesseract', 'tesseract'))
+tesseract_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'tesseract', 'bin', 'tesseract'))
+print(f"Attempting to set Tesseract command to: {tesseract_path}")
+print(f"Does Tesseract path exist? {os.path.exists(tesseract_path)}")
 if os.path.exists(tesseract_path):
     pytesseract.pytesseract.tesseract_cmd = tesseract_path
 else:
     # For local development on Windows
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    print(f"Falling back to Windows Tesseract path: {pytesseract.pytesseract.tesseract_cmd}")
 
 
 app = FastAPI(
